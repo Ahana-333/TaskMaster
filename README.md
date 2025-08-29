@@ -58,5 +58,4 @@ This project is licensed under the MIT License — feel free to use and modify.
 ---
 
 If you want, I can also make a **version with GitHub badges, screenshots placeholders, and Firebase setup instructions** so your repo looks professional and ready to impress.  
-Do you want me to prepare that polished version?
 
