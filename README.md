@@ -47,13 +47,7 @@ It helps users create, organize, and prioritize tasks efficiently — with local
 
 ---
 
-## 📝 License
 
-This project is licensed under the MIT License — feel free to use and modify.
-
----
-
-***Made with ❤️ using Flutter***
 
 
 
