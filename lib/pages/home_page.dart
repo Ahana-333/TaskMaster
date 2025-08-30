@@ -25,59 +25,87 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('TaskMaster'),
+        title: const Text('TaskMaster'),
         actions: [
           IconButton(
-            icon: Icon(Icons.calendar_today),
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CalendarPage())),
+            icon: const Icon(Icons.calendar_today),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const CalendarPage()),
+            ),
           ),
           IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SettingsPage())),
+            icon: const Icon(Icons.settings),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const SettingsPage()),
+            ),
           ),
           PopupMenuButton<String>(
             onSelected: (v) => setState(() {
               if (v == 'All') {
                 categoryFilter = null;
-              } else if (v == 'SortDue') sortBy = 'due';
-              else if (v == 'SortPriority') sortBy = 'priority';
-              else categoryFilter = v.toLowerCase();
+              } else if (v == 'SortDue') {
+                sortBy = 'due';
+              } else if (v == 'SortPriority') {
+                sortBy = 'priority';
+              } else {
+                categoryFilter = v.toLowerCase();
+              }
             }),
             itemBuilder: (ctx) => [
-              PopupMenuItem(value: 'SortDue', child: Text('Sort by due date')),
-              PopupMenuItem(value: 'SortPriority', child: Text('Sort by priority')),
-              PopupMenuDivider(),
-              PopupMenuItem(value: 'All', child: Text('All categories')),
-              PopupMenuItem(value: 'Work', child: Text('Work')),
-              PopupMenuItem(value: 'Personal', child: Text('Personal')),
-              PopupMenuItem(value: 'Study', child: Text('Study')),
+              const PopupMenuItem(value: 'SortDue', child: Text('Sort by due date')),
+              const PopupMenuItem(value: 'SortPriority', child: Text('Sort by priority')),
+              const PopupMenuDivider(),
+              const PopupMenuItem(value: 'All', child: Text('All categories')),
+              const PopupMenuItem(value: 'Work', child: Text('Work')),
+              const PopupMenuItem(value: 'Personal', child: Text('Personal')),
+              const PopupMenuItem(value: 'Study', child: Text('Study')),
             ],
           ),
         ],
       ),
-      body: tasks.isEmpty
-          ? Center(child: Text('No tasks yet — tap + to add one'))
-          : ListView.builder(
-              padding: EdgeInsets.all(8),
-              itemCount: tasks.length,
-              itemBuilder: (ctx, i) {
-                final t = tasks[i];
-                return TaskCard(
-                  task: t,
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TaskDetailPage(task: t))),
-                  onDelete: () async {
-                    await taskModel.deleteTask(t.id);
-                  },
-                  onToggleComplete: () => taskModel.toggleComplete(t.id),
-                );
-              },
-            ),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('lib/assets/app_background.png'), 
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: tasks.isEmpty
+            ? const Center(
+                child: Text(
+                  'No tasks yet — tap + to add one',
+                  style: TextStyle(color: Colors.white), // so text is visible
+                ),
+              )
+            : ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: tasks.length,
+                itemBuilder: (ctx, i) {
+                  final t = tasks[i];
+                  return TaskCard(
+                    task: t,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => TaskDetailPage(task: t)),
+                    ),
+                    onDelete: () async {
+                      await taskModel.deleteTask(t.id);
+                    },
+                    onToggleComplete: () => taskModel.toggleComplete(t.id),
+                  );
+                },
+              ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final added = await Navigator.push(context, MaterialPageRoute(builder: (_) => AddTaskPage()));
-          // if added, TaskModel will have been updated inside AddTaskPage
+          await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const AddTaskPage()),
+          );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
