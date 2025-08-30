@@ -33,7 +33,9 @@ class _CalendarPageState extends State<CalendarPage> {
         _selected != null ? _tasksForDay(allTasks, _selected!) : [];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Calendar')),
+      appBar: AppBar(
+        title: const Text('Calendar'),
+      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -54,6 +56,37 @@ class _CalendarPageState extends State<CalendarPage> {
                   _focused = focusedDay;
                 });
               },
+              daysOfWeekStyle: const DaysOfWeekStyle(
+                weekdayStyle: TextStyle(color: Colors.white),
+                weekendStyle: TextStyle(color: Colors.white),
+              ),
+              calendarStyle: const CalendarStyle(
+                defaultTextStyle: TextStyle(color: Colors.white),
+                weekendTextStyle: TextStyle(color: Colors.white),
+                selectedDecoration: BoxDecoration(
+                  color: Colors.purple,
+                  shape: BoxShape.circle,
+                ),
+                selectedTextStyle: TextStyle(color: Colors.white),
+                todayDecoration: BoxDecoration(
+                  border: Border.fromBorderSide(
+                    BorderSide(color: Colors.purple, width: 2),
+                  ),
+                  shape: BoxShape.circle,
+                ),
+                todayTextStyle: TextStyle(color: Colors.white),
+              ),
+              headerStyle: const HeaderStyle(
+                titleCentered: true,
+                formatButtonVisible: false,
+                titleTextStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+                leftChevronIcon: Icon(Icons.chevron_left, color: Colors.white),
+                rightChevronIcon:
+                    Icon(Icons.chevron_right, color: Colors.white),
+              ),
               calendarBuilders: CalendarBuilders(
                 markerBuilder: (context, day, events) {
                   final tasks = _tasksForDay(allTasks, day);
@@ -61,11 +94,20 @@ class _CalendarPageState extends State<CalendarPage> {
                     return Positioned(
                       right: 1,
                       bottom: 1,
-                      child: CircleAvatar(
-                        radius: 6,
+                      child: Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.purple,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.black, width: 1.5),
+                        ),
                         child: Text(
                           '${tasks.length}',
-                          style: const TextStyle(fontSize: 10),
+                          style: const TextStyle(
+                            fontSize: 10,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     );
